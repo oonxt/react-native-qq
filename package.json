@@ -1,27 +1,53 @@
 {
-  "name": "react-native-qq",
-  "version": "3.0.1",
-  "description": "QQ Login&Share support in React Native.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
+  "_from": "git+https://github.com/oonxt/react-native-qq.git",
+  "_id": "react-native-qq@3.0.1",
+  "_inBundle": false,
+  "_integrity": "sha1-l3Q0bm/7B8sbpXGW3Tr+JW/RgQc=",
+  "_location": "/react-native-qq",
+  "_phantomChildren": {},
+  "_requested": {
     "type": "git",
-    "url": "git+https://github.com/reactnativecn/react-native-qq.git"
+    "raw": "react-native-qq@git+https://github.com/oonxt/react-native-qq.git",
+    "name": "react-native-qq",
+    "escapedName": "react-native-qq",
+    "rawSpec": "git+https://github.com/oonxt/react-native-qq.git",
+    "saveSpec": "git+https://github.com/oonxt/react-native-qq.git",
+    "fetchSpec": "https://github.com/oonxt/react-native-qq.git",
+    "gitCommittish": "master"
   },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "git+https://github.com/oonxt/react-native-qq.git#7f38c836c55a999be3ba7e92520d018ee553e0de",
+  "_spec": "react-native-qq@git+https://github.com/oonxt/react-native-qq.git",
+  "_where": "/Users/mac/Documents/TestShare",
+  "author": {
+    "name": "tdzl2003"
+  },
+  "bugs": {
+    "url": "https://github.com/reactnativecn/react-native-qq/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "bluebird": "^3.5.0"
+  },
+  "deprecated": false,
+  "description": "QQ Login&Share support in React Native.",
+  "homepage": "https://github.com/reactnativecn/react-native-qq#readme",
   "keywords": [
     "react-native",
     "ios",
     "android"
   ],
-  "author": "tdzl2003",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/reactnativecn/react-native-qq/issues"
+  "main": "index.js",
+  "name": "react-native-qq",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reactnativecn/react-native-qq.git"
   },
-  "homepage": "https://github.com/reactnativecn/react-native-qq#readme",
-  "dependencies": {
-    "bluebird": "^3.5.0"
-  }
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "3.0.1"
 }
