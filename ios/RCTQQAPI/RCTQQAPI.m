@@ -69,27 +69,18 @@ RCT_EXPORT_MODULE();
     }
 }
 
-RCT_EXPORT_METHOD(isQQInstalled:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(isQQInstalled:(RCTResponseSenderBlock)callback)
 {
-    if ([QQApiInterface isQQInstalled]) {
-        resolve(@[[NSNull null]]);
-    }
-    else {
-        reject(@"-1",INVOKE_FAILED,nil);
-    }
+    callback(@[[NSNull null], @([QQApiInterface isQQInstalled])]);
 }
 
-RCT_EXPORT_METHOD(isQQSupportApi:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(isQQSupportApi:(RCTResponseSenderBlock)callback)
 {
-    if ([QQApiInterface isQQSupportApi]) {
-        resolve(@[[NSNull null]]);
-    }
-    else {
-        reject(@"-1",INVOKE_FAILED,nil);
-    }
+    callback(@[[NSNull null], @([QQApiInterface isQQSupportApi])]);
 }
 
-RCT_EXPORT_METHOD(login:(NSString *)scopes resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(login:(NSString *)scopes
+                  :(RCTResponseSenderBlock)callback)
 {
     NSArray *scopeArray = nil;
     if (scopes && scopes.length) {
@@ -99,22 +90,19 @@ RCT_EXPORT_METHOD(login:(NSString *)scopes resolve:(RCTPromiseResolveBlock)resol
         scopeArray = @[@"get_user_info", @"get_simple_userinfo"];
     }
     BOOL success = [_qqapi authorize:scopeArray];
-    if (success) {
-        resolve(@[[NSNull null]]);
-    }
-    else {
-        reject(@"-1",INVOKE_FAILED,nil);
-    }
+    callback(@[success ? [NSNull null] : INVOKE_FAILED]);
 }
 
-RCT_EXPORT_METHOD(shareToQQ:(NSDictionary *)data resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(shareToQQ:(NSDictionary *)data
+                  :(RCTResponseSenderBlock)callback)
 {
-    [self _shareToQQWithData:data scene:0 resolve:resolve reject:reject];
+    [self _shareToQQWithData:data scene:0 callBack:callback];
 }
 
-RCT_EXPORT_METHOD(shareToQzone:(NSDictionary *)data resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(shareToQzone:(NSDictionary *)data
+                  :(RCTResponseSenderBlock)callback)
 {
-    [self _shareToQQWithData:data scene:1 resolve:resolve reject:reject];
+    [self _shareToQQWithData:data scene:1 callBack:callback];
 }
 
 RCT_EXPORT_METHOD(logout)
@@ -122,7 +110,7 @@ RCT_EXPORT_METHOD(logout)
     [_qqapi logout:nil];
 }
 
-- (void)_shareToQQWithData:(NSDictionary *)aData scene:(int)aScene resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject{
+- (void)_shareToQQWithData:(NSDictionary *)aData scene:(int)aScene callBack:(RCTResponseSenderBlock)callback {
     NSString *imageUrl = aData[RCTQQShareImageUrl];
     if (imageUrl.length && _bridge.imageLoader) {
         CGSize size = CGSizeZero;
@@ -132,17 +120,17 @@ RCT_EXPORT_METHOD(logout)
         }
         [_bridge.imageLoader loadImageWithURLRequest:[RCTConvert NSURLRequest:imageUrl] callback:^(NSError *error, UIImage *image) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self _shareToQQWithData:aData image:image scene:aScene resolve:resolve reject:reject];
+                [self _shareToQQWithData:aData image:image scene:aScene callBack:callback];
             });
         }];
     }
     else {
-        [self _shareToQQWithData:aData image:nil scene:aScene resolve:resolve reject:reject];
+        [self _shareToQQWithData:aData image:nil scene:aScene callBack:callback];
     }
 }
 
 
-- (void)_shareToQQWithData:(NSDictionary *)aData image:(UIImage*) image scene:(int)aScene resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject {
+- (void)_shareToQQWithData:(NSDictionary *)aData image:(UIImage*) image scene:(int)aScene callBack:(RCTResponseSenderBlock)callback {
     NSString *type = aData[RCTQQShareType];
 
     NSString *title = aData[RCTQQShareTitle];
@@ -205,13 +193,13 @@ RCT_EXPORT_METHOD(logout)
     }
 
     if (sent == EQQAPISENDSUCESS) {
-        resolve(@[[NSNull null]]);
+        callback(@[[NSNull null]]);
     }
     else if (sent == EQQAPIAPPSHAREASYNC) {
-        resolve(@[[NSNull null]]);
+        callback(@[[NSNull null]]);
     }
     else {
-        reject(@"-1",INVOKE_FAILED,nil);
+        callback(@"-1",INVOKE_FAILED,nil);
     }
 }
 
