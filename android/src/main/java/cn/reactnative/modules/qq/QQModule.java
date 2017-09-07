@@ -9,7 +9,7 @@ import android.app.Activity;
 
 import com.facebook.react.bridge.ActivityEventListener;
 import com.facebook.react.bridge.Arguments;
-import com.facebook.react.bridge.Promise;
+import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
@@ -96,55 +96,45 @@ public class QQModule extends ReactContextBaseJavaModule implements IUiListener,
     }
 
     @ReactMethod
-    public void isQQInstalled(Promise promise) {
-        if (api.isSupportSSOLogin(getCurrentActivity())) {
-            promise.resolve(true);
-        }
-        else {
-            promise.reject("not installed");
-        }
+    public void isQQInstalled(Callback callback) {
+        callback.invoke(null, api.isSupportSSOLogin(getCurrentActivity()));
     }
 
     @ReactMethod
-    public void isQQSupportApi(Promise promise) {
-        if (api.isSupportSSOLogin(getCurrentActivity())) {
-            promise.resolve(true);
-        }
-        else {
-            promise.reject("not support");
-        }
+    public void isQQSupportApi(Callback callback) {
+        callback.invoke(null, api.isSupportSSOLogin(getCurrentActivity()));
     }
 
     @ReactMethod
-    public void login(String scopes, Promise promise){
+    public void login(String scopes, Callback callback){
         this.isLogin = true;
         if (!api.isSessionValid()){
             api.login(getCurrentActivity(), scopes == null ? "get_simple_userinfo" : scopes, this);
-            promise.resolve(null);
+            callback.invoke();
         } else {
-            promise.reject(INVOKE_FAILED);
+            callback.invoke(INVOKE_FAILED);
         }
     }
 
     @ReactMethod
-    public void shareToQQ(final ReadableMap data, final Promise promise){
+    public void shareToQQ(final ReadableMap data, final Callback callback){
         UiThreadUtil.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 _shareToQQ(data, 0);
-                promise.resolve(null);
+                callback.invoke();
             }
         });
     }
 
     @ReactMethod
-    public void shareToQzone(final ReadableMap data, final Promise promise)
+    public void shareToQzone(final ReadableMap data, final Callback callback)
     {
         UiThreadUtil.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 _shareToQQ(data, 1);
-                promise.resolve(null);
+                callback.invoke();
             }
         });
     }
