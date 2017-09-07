@@ -199,7 +199,7 @@ RCT_EXPORT_METHOD(logout)
         callback(@[[NSNull null]]);
     }
     else {
-        callback(@"-1",INVOKE_FAILED,nil);
+        callback(INVOKE_FAILED);
     }
 }
 
