@@ -25,7 +25,7 @@
     "name": "tdzl2003"
   },
   "bugs": {
-    "url": "https://github.com/reactnativecn/react-native-qq/issues"
+    "url": "https://github.com/oonxt/react-native-qq/issues"
   },
   "bundleDependencies": false,
   "dependencies": {
@@ -33,7 +33,7 @@
   },
   "deprecated": false,
   "description": "QQ Login&Share support in React Native.",
-  "homepage": "https://github.com/reactnativecn/react-native-qq#readme",
+  "homepage": "https://github.com/oonxt/react-native-qq#readme",
   "keywords": [
     "react-native",
     "ios",
@@ -44,7 +44,7 @@
   "name": "react-native-qq",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/reactnativecn/react-native-qq.git"
+    "url": "git+https://github.com/oonxt/react-native-qq.git"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
